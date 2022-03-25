@@ -53,19 +53,23 @@ void loop() {
     digitalWrite(LED_GPIO, LOW);
     delay(100);
     lcd.setCursor(0,0);
-    lcd.print("Khong khi:");lcd.print(value);
+    lcd.print("Khong khi:");lcd.print(value);lcd.print("      ");
     lcd.setCursor(0,1);
     lcd.print("Ro ri GAS     ");
-    phone_lcd.print(2,0,"Ro ri GAS        ");
-    phone_lcd.print(2,1,"Kiem tra van GAS");
-  }else {
+    phone_lcd.print(0,0,"Ro ri GAS        ");
+    phone_lcd.print(0,1,"Kiem tra van GAS  ");
+  }else {                                     //khi binh thuong
     lcd.setCursor(0,0);
-    lcd.print("Khong khi:");lcd.print(value);
+    lcd.print("Khong khi:");lcd.print(value);lcd.print("      ");
     lcd.setCursor(0,1);
     lcd.print("Binh thuong!    ");
-    phone_lcd.print(0,0,"Khong khi: "); phone_lcd.print(11,0,value);
+    if(value <1000) {
+    phone_lcd.print(0,0,"Khong khi: "); phone_lcd.print(11,0,value); phone_lcd.print(14,0,"  ");
     phone_lcd.print(0,1,"Binh thuong!    ");
+    }else{
+    phone_lcd.print(0,0,"Khong khi: "); phone_lcd.print(11,0,value);
+    phone_lcd.print(0,1,"Binh thuong!    ");}
   };
-  
+  Serial.print(value);
   delay(500);
 }
