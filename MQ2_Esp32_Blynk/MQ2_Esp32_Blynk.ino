@@ -9,33 +9,38 @@ char auth[] = "JVWyJnFwf-C7jOXPmooNcMjrb-Exhz21";       // You should get Auth T
 char ssid[] = "Trun Nè";                    // Your Wi-Fi Credentials
 char pass[] = "trunkhongchanh";
 
-#define LED_GPIO 19
-#define BUZZER_GPIO 25
-#define MQ_2 32
+#define LED_GPIO 19               //led pin
+#define BUZZER_GPIO 25            //Buzzer Pin
+#define MQ_2 32                   //Sensor MQ-2 Pin
 
 
 //add of lcd 1602
-LiquidCrystal_I2C lcd(0x27, 16, 2);
-WidgetLCD phone_lcd(V1);
+LiquidCrystal_I2C lcd(0x27, 16, 2);           //goi d/c chan lcd 1602
+WidgetLCD phone_lcd(V1);                      
 
 void setup() {
-  Serial.begin(9600);
   lcd.init();
-  
   lcd.backlight();
   pinMode(BUZZER_GPIO, OUTPUT);
   pinMode(LED_GPIO, OUTPUT);
   delay(10);
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
+  lcd.setCursor(0,0);
+  lcd.print("Connecting to ");
+  lcd.setCursor(0,1);
+  lcd.println(ssid);
+  
   WiFi.begin(ssid, pass);
   int wifi_ctr = 0;
+  
   while (WiFi.status() != WL_CONNECTED) {
   delay(500);
-  Serial.print(".");
+  lcd.print(".");
   }
-  Serial.println("WiFi connected");  
+  lcd.clear();
+  lcd.setCursor(0,0);
+  lcd.println("WiFi connected");  delay(1000);
   Blynk.begin("JVWyJnFwf-C7jOXPmooNcMjrb-Exhz21", ssid, pass);
+  lcd.clear();
   
 
 }
@@ -56,7 +61,7 @@ void loop() {
     lcd.print("Khong khi:");lcd.print(value);lcd.print("      ");
     lcd.setCursor(0,1);
     lcd.print("Ro ri GAS     ");
-    phone_lcd.print(0,0,"Ro ri GAS        ");
+    phone_lcd.print(0,0,"Ro ri GAS       ");
     phone_lcd.print(0,1,"Kiem tra van GAS  ");
   }else {                                     //khi binh thuong
     lcd.setCursor(0,0);
